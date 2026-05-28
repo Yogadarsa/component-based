@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowForge - Pipeline Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="background-blur"></div>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">F</div>
+            <h1>FlowForge Engine</h1>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sidebar: Workflows -->
+        <aside class="glass-panel">
+            <h2 class="panel-title">
+                <i data-lucide="layers"></i> Examples
+            </h2>
+            <div class="workflow-list" id="workflow-list">
+                <!-- Populated via JS -->
+                <div style="text-align: center; color: #94a3b8; padding: 2rem 0;">
+                    <i data-lucide="loader-2" class="icon spin"></i> Loading workflows...
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Execution Area -->
+        <section class="execution-area">
+            
+            <div class="glass-panel" id="execution-panel" style="display: none;">
+                <div class="controls">
+                    <div>
+                        <h2 class="selected-workflow-title" id="wf-title">Select a Workflow</h2>
+                        <p class="workflow-desc" id="wf-desc" style="margin-top: 0.5rem;"></p>
+                    </div>
+                    <button class="btn-run" id="btn-run">
+                        <i data-lucide="play" class="icon"></i> Run Workflow
+                    </button>
+                </div>
+
+                <div id="results-container" class="hidden" style="margin-top: 2rem;">
+                    <div class="results-grid">
+                        <div class="metric-card">
+                            <span class="metric-label">Status</span>
+                            <span class="metric-value" id="res-status">--</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Duration</span>
+                            <span class="metric-value" id="res-duration">--</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Nodes Run</span>
+                            <span class="metric-value" id="res-nodes">--</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <h3 class="panel-title"><i data-lucide="terminal"></i> Live Execution Logs</h3>
+                        <div class="terminal">
+                            <div class="terminal-header">
+                                <div class="dot r"></div>
+                                <div class="dot y"></div>
+                                <div class="dot g"></div>
+                            </div>
+                            <div class="terminal-body" id="terminal-body">
+                                <span style="color: var(--text-muted);">Waiting to run...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="raw-output">
+                        <h3 class="panel-title"><i data-lucide="database"></i> Final Node Results</h3>
+                        <pre class="json-output" id="res-json">{}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="glass-panel" id="empty-state" style="text-align: center; padding: 5rem 2rem;">
+                <i data-lucide="git-merge" style="width: 64px; height: 64px; color: var(--primary-color); margin-bottom: 1rem; opacity: 0.8;"></i>
+                <h2>Select a Workflow</h2>
+                <p style="color: var(--text-muted); margin-top: 0.5rem;">Choose an example from the left panel to execute.</p>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="/static/script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

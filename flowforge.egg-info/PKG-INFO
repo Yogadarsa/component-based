@@ -1,0 +1,138 @@
+Metadata-Version: 2.4
+Name: flowforge
+Version: 1.0.0
+Summary: A Python Workflow Pipeline Engine for defining and executing multi-step workflows as DAGs
+Home-page: https://github.com/flowforge/flowforge
+Author: FlowForge Contributors
+Keywords: workflow pipeline dag orchestration scheduler
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: provides-extra
+Dynamic: requires-python
+Dynamic: summary
+
+# FlowForge 🔧
+
+**A Python Workflow Pipeline Engine**
+
+FlowForge lets you define multi-step workflows as Directed Acyclic Graphs (DAGs), execute them with parallel scheduling, retry policies, conditional branching, checkpointing, and a rich event system.
+
+> ⚡ **Zero dependencies** — built entirely on the Python standard library.
+
+## Features
+
+- 📊 **DAG-based workflows** — Define steps and dependencies as a directed acyclic graph
+- ⚡ **Parallel execution** — Independent steps run concurrently via thread pool
+- 🔄 **Retry policies** — Fixed, exponential backoff, and linear backoff strategies
+- 🔀 **Conditional branching** — Route execution paths based on runtime data
+- 💾 **Checkpointing** — Pause, save state, and resume workflows later
+- 📡 **Event system** — Subscribe to lifecycle events (start, complete, fail, retry)
+- 🏗️ **Fluent builder API** — Construct workflows with clean, chainable syntax
+- 🎯 **Decorator API** — Register steps with `@workflow_step` decorator
+- ⏱️ **Timeout enforcement** — Prevent runaway nodes
+- 🧪 **Fully tested** — Comprehensive unit and integration test suite
+
+## Quick Start
+
+```python
+from flowforge import WorkflowBuilder
+
+def extract(ctx):
+    return [1, 2, 3]
+
+def transform(ctx):
+    data = ctx.get_node_result("extract")
+    return [x * 2 for x in data]
+
+def load(ctx):
+    data = ctx.get_node_result("transform")
+    print(f"Loaded {len(data)} records: {data}")
+
+workflow = (
+    WorkflowBuilder("etl")
+    .add_step("extract", extract)
+    .add_step("transform", transform, depends_on=["extract"])
+    .add_step("load", load, depends_on=["transform"])
+    .build()
+)
+
+result = workflow.run()
+print(result.status)  # WorkflowStatus.COMPLETED
+```
+
+## Installation
+
+```bash
+pip install -e .
+```
+
+## Running Tests
+
+```bash
+pip install pytest
+python -m pytest tests/ -v
+```
+
+## Examples
+
+See the `examples/` directory for complete working examples:
+
+| Example | Description |
+|---------|-------------|
+| `basic_workflow.py` | Simple 3-step ETL pipeline |
+| `parallel_workflow.py` | Fan-out / fan-in parallel processing |
+| `conditional_workflow.py` | If/else branching based on runtime data |
+| `advanced_workflow.py` | All features combined: retry, events, conditions |
+
+## Documentation
+
+- [Architecture Report](docs/architecture_report.md) — Class diagrams, sequence diagrams, state machines
+- [User Documentation](docs/user_documentation.md) — API reference, usage guide, installation
+- [Competitor Analysis](docs/competitor_analysis.md) — Comparison with Airflow, Prefect, Step Functions, Logic Apps
+
+## Project Structure
+
+```
+flowforge/
+├── __init__.py          # Public API
+├── enums.py             # Status enumerations
+├── exceptions.py        # Exception hierarchy
+├── core/
+│   ├── node.py          # Node (workflow step)
+│   ├── dag.py           # Directed Acyclic Graph
+│   ├── context.py       # Execution context
+│   └── engine.py        # Workflow engine
+├── policies/
+│   ├── retry.py         # Retry strategies
+│   └── timeout.py       # Timeout policy
+├── branching/
+│   └── conditions.py    # Conditional routing
+├── checkpoint/
+│   └── manager.py       # Checkpoint save/restore
+├── events/
+│   └── hooks.py         # Event pub/sub system
+└── builders/
+    └── workflow.py      # Fluent builder API
+```
+
+## License
+
+MIT License
