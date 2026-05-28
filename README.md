@@ -1,23 +1,52 @@
-# FlowForge 🔧
+# FlowForge 
+**Instructions for running the project**
+1. Make sure you are in the project folder
+powershell
+cd "d:\component final assessement"
+2. Run the Examples
+We have 4 different example scripts built to demonstrate the capabilities of the engine. Run any of them using the python command:
+
+To see a basic sequential workflow:
+powershell
+python examples/basic_workflow.py
+
+To see parallel multi-threading in action:
+powershell
+python examples/parallel_workflow.py
+
+To see if/else conditional routing:
+powershell
+python examples/conditional_workflow.py
+
+To see advanced features (retries, events, branching, and parallel running together):
+powershell
+python examples/advanced_workflow.py
+
+3. Run the Test Suite (Proves it is Enterprise-Grade)
+If you want to prove to your professor that this is a robust component, run the automated test suite we built. It will instantly execute all 125 tests:
+
+powershell
+python -m pytest tests/ -v
+
 
 **A Python Workflow Pipeline Engine**
 
 FlowForge lets you define multi-step workflows as Directed Acyclic Graphs (DAGs), execute them with parallel scheduling, retry policies, conditional branching, checkpointing, and a rich event system.
 
-> ⚡ **Zero dependencies** — built entirely on the Python standard library.
+> **Zero dependencies** — built entirely on the Python standard library.
 
 ## Features
 
-- 📊 **DAG-based workflows** — Define steps and dependencies as a directed acyclic graph
-- ⚡ **Parallel execution** — Independent steps run concurrently via thread pool
-- 🔄 **Retry policies** — Fixed, exponential backoff, and linear backoff strategies
-- 🔀 **Conditional branching** — Route execution paths based on runtime data
-- 💾 **Checkpointing** — Pause, save state, and resume workflows later
-- 📡 **Event system** — Subscribe to lifecycle events (start, complete, fail, retry)
-- 🏗️ **Fluent builder API** — Construct workflows with clean, chainable syntax
-- 🎯 **Decorator API** — Register steps with `@workflow_step` decorator
-- ⏱️ **Timeout enforcement** — Prevent runaway nodes
-- 🧪 **Fully tested** — Comprehensive unit and integration test suite
+- **DAG-based workflows** — Define steps and dependencies as a directed acyclic graph
+- **Parallel execution** — Independent steps run concurrently via thread pool
+- **Retry policies** — Fixed, exponential backoff, and linear backoff strategies
+- **Conditional branching** — Route execution paths based on runtime data
+- **Checkpointing** — Pause, save state, and resume workflows later
+- **Event system** — Subscribe to lifecycle events (start, complete, fail, retry)
+- **Fluent builder API** — Construct workflows with clean, chainable syntax
+- **Decorator API** — Register steps with `@workflow_step` decorator
+- **Timeout enforcement** — Prevent runaway nodes
+- **Fully tested** — Comprehensive unit and integration test suite
 
 ## Quick Start
 
